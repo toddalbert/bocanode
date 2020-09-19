@@ -5,6 +5,9 @@ body {
   margin: 0 auto;
   padding: 0;
 }
+h1 {
+  color: #ff216e;
+}
 ul{
   padding: 0;
   margin: 0;
