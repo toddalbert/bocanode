@@ -5,6 +5,9 @@ const engines = require('consolidate')
 const { getStudents, getStudentByName } = require('./src/students')
 
 const app = express()
+app.engine('hbs', engines.handlebars)
+app.set('views', './views')
+app.set('view engine', 'hbs')
 
 const firebaseApp = firebase.initializeApp(
   functions.config().firebase
@@ -15,11 +18,8 @@ function getCourses() {
   return ref.once('value').then(snap => snap.val())
 }
 
-app.engine('hbs', engines.handlebars)
-app.set('views', './views')
-app.set('view engine', 'hbs')
 
-app.get('/courses', (req, res) => {
+app.get('/', (req, res) => {
   res.set('Cache-Control', 'public, max-age=300, s-max-age=600')
   getCourses().then(courses => {
     res.render('index', { courses })
